@@ -1,0 +1,12 @@
+if [ "$1" = "" ]; then
+  echo "Использование: $0 <количество создаваемых файлов>"
+  exit 1
+fi
+now=$(date '+%Y-%m-%d')
+prefix="${now}_temp"
+echo "Создание файлов, колличество - $1 "
+echo "now=$now"
+for i in $(seq 1 $1); do
+  file="${prefix}_${i}.bak"
+  touch $file
+done

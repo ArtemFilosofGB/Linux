@@ -1,0 +1,18 @@
+cleanup_directory() {
+    directory=$1
+    # Проверяем существование директории
+    if [ -d "$directory" ]; then
+        # Удаляем файлы с расширениями .bak, .tmp, .backup
+        find "$directory" -type f \( -name "*.bak" -o -name "*.tmp" -o -name "*.backup" \) -delete
+        echo "Директория успешно очищена от файлов срасширениями .bak, .tmp, .backup."
+    else
+        echo "Ошибка: Директория не существует."
+    fi
+}
+# Принимаем путь к директории как аргумент
+if [ $# -ne 1 ]; then
+    echo "Использование: $0 <путь к директории>"
+    exit 1
+fi
+# Вызываем функцию для очистки директории
+cleanup_directory "$1"

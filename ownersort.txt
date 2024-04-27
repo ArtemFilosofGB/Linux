@@ -1,0 +1,25 @@
+#!/bin/bash
+ownersort() {
+    directory=$1
+    if [ -d "$directory" ]; then
+        # Создаем директории для каждого владельца файла
+        find "$directory" -type f | while read file; do
+            owner=$(stat -c %U "$file")
+            mkdir -p "$directory/$owner"
+            cp -p "$file" "$directory/$owner"
+            rm -r "$file"
+        done
+        
+        echo "Файлы успешно скопированы в директории, названные по имени их владельцев."
+    else
+        echo "Ошибка: Директория не существует."
+        exit 1
+    fi
+}
+# Принимаем путь к директории как аргумент
+if [ $# -ne 1 ]; then
+    echo "Использование: $0 <путь к директории>"
+    exit 1
+fi
+# Вызываем функцию для сортировки файлов
+ownersort "$1"
